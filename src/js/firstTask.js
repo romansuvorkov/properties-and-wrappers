@@ -1,18 +1,24 @@
 
 function orderByProps(inputObj, array) {
+  const sourceObj = inputObj;
   const restProp = [];
   const targetProp = [];
 
-  for (const prop in inputObj) {
+
+  for (let i = 0; i < array.length; i += 1) {
+    if (Object.prototype.hasOwnProperty.call(inputObj, array[i])) {
+      targetProp.push({
+        key: array[i],
+        value: inputObj[array[i]],
+      });
+      delete sourceObj[array[i]];
+    }
+  }
+  for (const prop in sourceObj) {
     if (array.indexOf(prop) === -1) {
       restProp.push({
         key: prop,
-        value: inputObj[prop],
-      });
-    } else {
-      targetProp.push({
-        key: prop,
-        value: inputObj[prop],
+        value: sourceObj[prop],
       });
     }
   }
